@@ -1,9 +1,11 @@
 package com.zlobasss.notebas.entity;
 
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Table(name = "contact")
+@Entity(name = "contact")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -12,9 +14,14 @@ import lombok.*;
 @Builder
 @ToString
 public class Contact {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String last;
     private String first;
     private String phone;
-    private User author;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private User user;
 }

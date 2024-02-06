@@ -1,10 +1,12 @@
 package com.zlobasss.notebas.entity;
 
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Timestamp;
 
+@Entity(name = "note")
 @Table(name = "note")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,9 +16,14 @@ import java.sql.Timestamp;
 @Data
 @ToString
 public class Note {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String head;
     private String content;
     private Timestamp date;
-    private User author;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private User user;
 }
